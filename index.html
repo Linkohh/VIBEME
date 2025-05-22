@@ -50,8 +50,7 @@
             transition: opacity 0.2s ease, width 0.2s ease, height 0.2s ease;
             mix-blend-mode: screen;
             filter: blur(20px);
-            will-change: transform, background; /* Added background to will-change */
-            /* MODIFIED: Use CSS Variables for dynamic HSL values */
+            will-change: transform, background;
             --glow-hue: 0;
             --glow-saturation: 100%;
             --glow-lightness: 60%;
@@ -62,10 +61,7 @@
                 hsla(var(--glow-hue), var(--glow-saturation), var(--glow-lightness), 0.4) 50%,
                 hsla(var(--glow-hue), var(--glow-saturation), var(--glow-lightness), 0) 70%
             );
-            /* REMOVED: animation: rgb-glow 8s linear infinite; */
         }
-
-        /* REMOVED: @keyframes rgb-glow { ... } block is no longer needed */
 
         .mouse-glow.hover-effect {
             width: 125px;
@@ -128,50 +124,49 @@
         .quote-container-outer {
             position: relative;
             padding: 4px;
-            border-radius: 18px; /* Slightly larger than inner for the border to show */
-            background: linear-gradient(135deg, var(--color1), var(--color2), var(--color3)); /* Fallback, actual border is animated */
+            border-radius: 18px;
+            background: linear-gradient(135deg, var(--color1), var(--color2), var(--color3));
             box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            border: 3px solid; /* Animated border */
+            border: 3px solid;
             animation: rgb-border-spin 8s linear infinite;
             z-index: 1;
         }
         .quote-container-outer::before {
             content: '';
             position: absolute;
-            inset: -6px; /* Controls thickness of the outer glow */
-            border-radius: 22px; /* Slightly larger than outer container's border-radius */
-            border: 2px solid; /* This will also be animated */
+            inset: -6px;
+            border-radius: 22px;
+            border: 2px solid;
             z-index: -1;
-            animation: rgb-border-spin 8s linear infinite reverse; /* Reverse animation for more dynamism */
+            animation: rgb-border-spin 8s linear infinite reverse;
             filter: blur(8px);
             opacity: 0.7;
         }
 
         .quote-container-inner {
-            background: rgba(255,255,255,0.15); /* More subtle glass effect */
+            background: rgba(255,255,255,0.15);
             backdrop-filter: blur(20px) saturate(180%);
-            -webkit-backdrop-filter: blur(20px) saturate(180%); /* Safari */
-            border:1px solid rgba(255,255,255,0.3); /* Soft border for the glass */
-            box-shadow:0 8px 32px rgba(0,0,0,.15); /* Softer shadow */
-            border-radius: 12px; /* Inner container border radius */
-            padding: 1.5rem; /* Tailwind p-6 */
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border:1px solid rgba(255,255,255,0.3);
+            box-shadow:0 8px 32px rgba(0,0,0,.15);
+            border-radius: 12px;
+            padding: 1.5rem;
             position: relative;
-            overflow: hidden; /* Important for pattern effect */
+            overflow: hidden;
         }
 
         .quote-pattern {
             position: absolute;
             inset: 0;
-            opacity: 0.1; /* Subtle pattern */
-            mix-blend-mode: multiply; /* Or 'overlay', 'soft-light' */
-            border-radius: 12px; /* Match inner container */
-            /* background-image will be set by JS */
+            opacity: 0.1;
+            mix-blend-mode: multiply;
+            border-radius: 12px;
         }
 
         .generate-btn {
-            width: 110px; /* Slightly smaller */
-            height: 110px; /* Slightly smaller */
-            padding: 5px; /* Adjust padding if text wraps oddly */
+            width: 110px;
+            height: 110px;
+            padding: 5px;
             border-radius: 50%;
             background: linear-gradient(135deg, var(--color1), var(--color2));
             color: white;
@@ -185,22 +180,22 @@
             align-items: center;
             justify-content: center;
             text-align: center;
-            transition: none; /* Remove existing transitions to avoid conflict with ::before */
-            overflow: hidden; /* Keep ::before glow contained */
+            transition: none;
+            overflow: hidden;
             cursor: pointer;
-            z-index: 10000; /* Ensure it's above other elements */
+            z-index: 10000;
         }
 
         .generate-btn::before {
             content: '';
             position: absolute;
-            z-index: -1; /* Behind the button content */
-            inset: -3px; /* Creates the border effect */
+            z-index: -1;
+            inset: -3px;
             border-radius: 50%;
             background: linear-gradient(60deg, var(--color1), var(--color2), var(--color3), var(--color1));
             background-size: 300% 300%;
             animation: gradient-border-flow 4s linear infinite;
-            filter: blur(2px); /* Soft glow */
+            filter: blur(2px);
         }
 
         @keyframes gradient-border-flow {
@@ -210,25 +205,24 @@
         }
 
         .generate-btn i {
-            font-size: 1.4rem; /* Adjust as needed */
-            margin-bottom: 0.2rem; /* Space between icon and text */
-            margin-right: 0; /* Reset any accidental right margin */
+            font-size: 1.4rem;
+            margin-bottom: 0.2rem;
+            margin-right: 0;
         }
 
         .generate-btn span {
-            font-size: 0.7rem; /* Smaller text */
+            font-size: 0.7rem;
             line-height: 1.1;
             display: block;
             font-weight: 600;
         }
 
         .generate-btn:hover {
-            /* Keep floating animation, no specific hover transform needed for button itself */
-            transform: translatey(0px); /* Override float's translateY for hover if needed, or remove if float is good */
+            transform: translatey(0px);
         }
 
         .generate-btn:hover::before {
-            filter: blur(4px); /* Slightly more glow on hover */
+            filter: blur(4px);
         }
 
         @keyframes float {
@@ -246,20 +240,18 @@
             transition: color 1.5s ease;
         }
 
-        /* Ensure quote text and related elements are above the pattern */
         .quote-container-outer, .quote-container-inner {
             position: relative;
             z-index: 10;
         }
         .quote-text-font, .heading-font, .author-font, #countdown {
             position: relative;
-            z-index: 20; /* Higher than pattern */
+            z-index: 20;
         }
 
-        /* Animation Container */
         .quote-animation-container {
             perspective: 1000px;
-            min-height: 100px; /* Adjust as needed based on typical quote length */
+            min-height: 100px;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -271,67 +263,42 @@
             will-change: transform, opacity;
         }
 
-        .exit-active {
-            animation: exitAnimation 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
-        }
+        .exit-active { animation: exitAnimation 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards; }
         @keyframes exitAnimation {
             0% { transform: translateY(0) rotateX(0) scale(1); opacity: 1; }
             30% { transform: translateY(-20px) rotateX(20deg) scale(1.1); opacity: 0.8; }
             100% { transform: translateY(100px) rotateX(60deg) scale(0.5); opacity: 0; }
         }
 
-        .enter-active {
-            animation: enterAnimation 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-        }
+        .enter-active { animation: enterAnimation 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
         @keyframes enterAnimation {
             0% { transform: translateY(-100px) rotateX(-60deg) scale(0.5); opacity: 0; }
             70% { transform: translateY(20px) rotateX(10deg) scale(1.05); opacity: 0.8; }
             100% { transform: translateY(0) rotateX(0) scale(1); opacity: 1; }
         }
 
-        .author-animate {
-            transform-origin: center bottom;
-            will-change: transform, opacity;
-        }
-        .author-exit {
-            animation: authorExit 0.6s ease-out forwards;
-        }
+        .author-animate { transform-origin: center bottom; will-change: transform, opacity; }
+        .author-exit { animation: authorExit 0.6s ease-out forwards; }
         @keyframes authorExit {
             0% { transform: translateX(0) scaleY(1); opacity: 1; }
             100% { transform: translateX(50px) scaleY(0.8); opacity: 0; }
         }
-        .author-enter {
-            animation: authorEnter 0.6s ease-in forwards;
-        }
+        .author-enter { animation: authorEnter 0.6s ease-in forwards; }
         @keyframes authorEnter {
             0% { transform: translateX(-50px) scaleY(0.8); opacity: 0; }
             100% { transform: translateX(0) scaleY(1); opacity: 1; }
         }
 
-        /* Glitch Effect */
-        .glitch-effect {
-            position: relative;
-        }
+        .glitch-effect { position: relative; }
         .glitch-effect::before,
         .glitch-effect::after {
             content: attr(data-text);
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0; /* Start hidden */
+            top: 0; left: 0; width: 100%; height: 100%;
+            opacity: 0;
         }
-        .glitch-effect::before {
-            color: #f0f; /* Magenta */
-            z-index: -1;
-            animation: glitch-anim 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
-        }
-        .glitch-effect::after {
-            color: #0ff; /* Cyan */
-            z-index: -2;
-            animation: glitch-anim 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) reverse both;
-        }
+        .glitch-effect::before { color: #f0f; z-index: -1; animation: glitch-anim 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both; }
+        .glitch-effect::after { color: #0ff; z-index: -2; animation: glitch-anim 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) reverse both; }
         @keyframes glitch-anim {
             0% { transform: translate(0); opacity: 1; }
             20% { transform: translate(-5px, 5px); opacity: 0.8; }
@@ -341,480 +308,69 @@
             100% { transform: translate(0); opacity: 0; }
         }
 
-        /* Matrix Background */
         .matrix-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1; /* Behind everything */
-            overflow: hidden;
-            opacity: 0.3; /* Adjust for subtlety */
-            mix-blend-mode: screen; /* Or 'overlay', 'color-dodge' */
-            background: rgba(0,0,0,0.1); /* Slight dark tint to help blend */
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1; overflow: hidden; opacity: 0.3;
+            mix-blend-mode: screen; background: rgba(0,0,0,0.1);
         }
         .binary-column {
-            position: absolute;
-            top: 0; /* Start off-screen */
-            width: 15px; /* Width of each column */
-            font-family: 'Roboto Mono', monospace;
-            font-size: 16px;
-            color: rgba(0, 255, 0, 0.9); /* Classic green */
-            text-shadow: 0 0 8px rgba(0, 255, 0, 0.7);
-            writing-mode: vertical-rl;
-            text-orientation: mixed;
-            white-space: nowrap;
-            animation: fall linear infinite;
-            will-change: transform;
-            line-height: 1.2;
-            font-weight: 500;
-            opacity: 0; /* Start hidden, fade in */
+            position: absolute; top: 0; width: 15px;
+            font-family: 'Roboto Mono', monospace; font-size: 16px;
+            color: rgba(0, 255, 0, 0.9); text-shadow: 0 0 8px rgba(0, 255, 0, 0.7);
+            writing-mode: vertical-rl; text-orientation: mixed; white-space: nowrap;
+            animation: fall linear infinite; will-change: transform;
+            line-height: 1.2; font-weight: 500; opacity: 0;
             transition: opacity 0.5s ease;
         }
-        .binary-column.visible {
-            opacity: 1;
-        }
-        .binary-column.fast { animation-duration: 5s; } /* Faster falling columns */
-        .binary-column.slow { animation-duration: 15s; } /* Slower falling columns */
-
-        .binary-column .highlight {
-            color: rgba(50, 255, 50, 1); /* Brighter green for highlighted bits */
-            font-weight: bold;
-        }
-
+        .binary-column.visible { opacity: 1; }
+        .binary-column.fast { animation-duration: 5s; }
+        .binary-column.slow { animation-duration: 15s; }
+        .binary-column .highlight { color: rgba(50, 255, 50, 1); font-weight: bold; }
         @keyframes fall {
-            from { transform: translateY(-100%); } /* Start above screen */
-            to { transform: translateY(100vh); } /* Fall to bottom of viewport */
+            from { transform: translateY(-100%); }
+            to { transform: translateY(100vh); }
         }
+        @media (max-width: 768px) { .binary-column { width: 12px; font-size: 14px; } }
+        @media (max-width: 480px) { .binary-column { width: 10px; font-size: 12px; } }
 
-        @media (max-width: 768px) {
-            .binary-column {
-                width: 12px;
-                font-size: 14px;
-            }
-        }
-        @media (max-width: 480px) {
-            .binary-column {
-                width: 10px;
-                font-size: 12px;
-            }
-        }
+        /* Styles for content not directly part of VibeMe quote gen - REMOVED as per user request to simplify */
 
-        /* Styles for content not directly part of VibeMe quote gen */
-        footer {
-            text-align: center;
-            padding: 1em;
-            max-width: 80px;
-            position: fixed;
-            top: 0;
-            right: 25px;
-            color: #fff;
-            z-index: 100;
+        /* Styles for Gemini Features */
+        #quote-explanation-container {
+            margin-top: 1rem; /* Space above explanation */
+            padding: 0.75rem; /* Tailwind p-3 */
+            background-color: rgba(0,0,0,0.2); /* Darker, translucent background */
+            border-radius: 0.5rem; /* Tailwind rounded-lg */
+            min-height: 40px; /* Minimum height to avoid collapse */
+            font-size: 0.875rem; /* Tailwind text-sm */
+            line-height: 1.25rem; /* Tailwind leading-5 */
+            color: var(--text-color-secondary); /* Use secondary text color */
+            max-height: 150px; /* Max height before scroll */
+            overflow-y: auto; /* Enable scroll if content overflows */
         }
+        #quote-explanation-container p { margin-bottom: 0.5rem; }
+        #quote-explanation-container strong { color: var(--text-color-main); }
 
-        footer a {
-            text-decoration: none;
-            display: inline-block;
-            width: 45px;
-            height: 45px;
+        .gemini-feature-btn {
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+        .gemini-feature-btn:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-1px);
+        }
+        .loading-spinner {
+            border: 2px solid var(--text-color-secondary);
+            border-top: 2px solid var(--color1);
             border-radius: 50%;
-            background: transparent;
-            border: 1px dashed #fff;
-            color: #fff;
-            margin: 5px;
-            transition: background 0.3s ease;
-        }
-
-        footer a:hover {
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        footer a .icons {
-            margin-top: 12px;
+            width: 16px;
+            height: 16px;
+            animation: spin 1s linear infinite;
             display: inline-block;
-            font-size: 20px;
+            margin-left: 0.5rem;
         }
-
-        * {
-            box-sizing: border-box;
-        }
-
-        .main-content {
-            text-align: center;
-            text-transform: uppercase;
-            scroll-snap-type: y mandatory;
-            position: relative;
-            height: 100vh;
-            overflow-y: scroll;
-        }
-
-        .hover,
-        .word,
-        .concept h1 {
-            cursor: pointer;
-        }
-
-        .concept {
-            position: relative;
-            padding: 5em;
-            height: 100vh;
-            overflow: hidden;
-            scroll-snap-align: center;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .concept:before {
-            content: "";
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            background: radial-gradient(rgba(0, 0, 0, 0.3), transparent);
-            opacity: 0;
-            transition: all 1s cubic-bezier(0.19, 1, 0.22, 1);
-            z-index: 0;
-        }
-
-        .concept:hover:before {
-            opacity: 0.5;
-        }
-
-        .concept h1 {
-            position: relative;
-            color: #fff;
-            font: 900 60px Montserrat, sans-serif;
-            text-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-            z-index: 1;
-        }
-
-        .concept-one {
-            display: grid;
-            grid: repeat(3, 1fr)/ repeat(3, 1fr);
-            background: url("https://meowlivia.s3.us-east-2.amazonaws.com/codepen/background/desert.jpg") no-repeat center center / cover;
-            padding: 8em;
-            align-items: initial;
-            justify-content: initial;
-        }
-
-        .concept-one h1 {
-            position: absolute;
-            margin: auto;
-            left: 0;
-            right: 0;
-            top: 50%;
-            margin-top: -30px;
-            transition: 0.5s ease;
-            z-index: 0;
-            letter-spacing: 25px;
-        }
-
-        .concept-one .hover {
-            z-index: 1;
-        }
-
-        .concept-one .hover-1:hover ~ h1 {
-            left: 30px;
-            margin-top: -10px;
-        }
-
-        .concept-one .hover-2:hover ~ h1 {
-            margin-top: -10px;
-        }
-
-        .concept-one .hover-3:hover ~ h1 {
-            right: 30px;
-            margin-top: -10px;
-        }
-
-        .concept-one .hover-4:hover ~ h1 {
-            left: 30px;
-        }
-
-        .concept-one .hover-6:hover ~ h1 {
-            right: 30px;
-        }
-
-        .concept-one .hover-7:hover ~ h1 {
-            left: 30px;
-            margin-top: -50px;
-        }
-
-        .concept-one .hover-8:hover ~ h1 {
-            margin-top: -50px;
-        }
-
-        .concept-one .hover-9:hover ~ h1 {
-            right: 30px;
-            margin-top: -50px;
-        }
-
-        .concept-two {
-            display: grid;
-            grid: 100% / repeat(6, 1fr);
-            padding: 5em 15em;
-            background: url(https://meowlivia.s3.us-east-2.amazonaws.com/codepen/background/forest.jpg) center center / cover;
-            align-items: initial;
-            justify-content: initial;
-        }
-
-        .concept-two .hover {
-            position: relative;
-            display: grid;
-            place-items: center;
-        }
-
-        .concept-two h1 {
-            position: relative;
-            color: transparent;
-            -webkit-text-stroke: 2px #fff;
-            text-shadow: none;
-            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .concept-two .hover:hover h1 {
-            transform: scale(1.5);
-            color: #fff;
-            -webkit-text-stroke: 2px transparent;
-            text-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-        }
-
-        .concept-three {
-            padding: 5em;
-            background: url(https://meowlivia.s3.us-east-2.amazonaws.com/codepen/background/canyon.jpg) center center / cover;
-        }
-
-        .concept-three .word {
-            display: flex;
-            align-items: center;
-            max-width: 500px;
-            margin: auto;
-            position: relative;
-            height: 100%;
-        }
-
-        .concept-three .hover {
-            flex: 1;
-            display: grid;
-            height: 100%;
-            grid: repeat(2, 1fr) / 100%;
-            position: relative;
-        }
-
-        .concept-three .hover div {
-            position: relative;
-            z-index: 5;
-        }
-
-        .concept-three h1 {
-            position: absolute;
-            margin: auto;
-            left: 0;
-            right: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            margin-top: 0;
-            transition: 0.3s cubic-bezier(0.23, 1, 0.32, 1);
-            z-index: 0;
-        }
-
-        .concept-three .hover div:nth-child(1):hover ~ h1 {
-            transform: translateY(calc(-50% - 10px));
-        }
-
-        .concept-three .hover div:nth-child(2):hover ~ h1 {
-            transform: translateY(calc(-50% + 10px));
-        }
-
-        .concept-four {
-            letter-spacing: 2em;
-            background: url(https://meowlivia.s3.us-east-2.amazonaws.com/codepen/background/glacier.jpg) no-repeat center center / cover;
-        }
-
-        .concept-four h1 {
-            display: inline-block;
-            position: relative;
-            transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            letter-spacing: inherit;
-        }
-
-        .concept-four:hover h1 {
-            letter-spacing: 25px;
-            transform: scale(1.3);
-        }
-
-        .concept-five {
-            background: url(https://meowlivia.s3.us-east-2.amazonaws.com/codepen/background/mountains.jpg) center center / cover;
-        }
-
-        .concept-five .word {
-            width: 600px;
-            margin: auto;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 80%;
-        }
-
-        .concept-five .char {
-            flex: 1;
-            position: relative;
-            display: inline-block;
-            top: 0;
-            transition: 0.5s cubic-bezier(0.19, 1, 0.22, 1);
-        }
-
-        .concept-five .word:hover .char:nth-child(even) {
-            top: 20px;
-        }
-
-        .concept-five .word:hover .char:nth-child(odd) {
-            top: -20px;
-        }
-
-        .concept-six {
-            background: url(https://meowlivia.s3.us-east-2.amazonaws.com/codepen/background/beach.jpg) top right / cover;
-        }
-
-        .concept-six .word {
-            width: 550px;
-            margin: auto;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 80%;
-        }
-
-        .concept-six .char {
-            flex: 1;
-            transition: 0.3s ease-in-out;
-            position: relative;
-            display: inline-block;
-        }
-
-        .concept-six .word:hover .char:nth-child(1) {
-            margin-top: -30px;
-            transform: rotate(-20deg);
-        }
-
-        .concept-six .word:hover .char:nth-child(2) {
-            margin: -40px 0px 0 10px;
-            transform: rotate(5deg);
-        }
-
-        .concept-six .word:hover .char:nth-child(3) {
-            margin: 15px 0 0 10px;
-            transform: rotate(12deg);
-        }
-
-        .concept-six .word:hover .char:nth-child(4) {
-            margin: -25px 0 0;
-            transform: rotate(5deg);
-        }
-
-        .concept-six .word:hover .char:nth-child(5) {
-            margin: -40px 5px 0;
-            transform: rotate(-10deg);
-        }
-
-        .concept-seven {
-            background: url(https://meowlivia.s3.us-east-2.amazonaws.com/codepen/background/fries.jpg) top center / cover;
-        }
-
-        .concept-seven h1 {
-            letter-spacing: 35px;
-            position: relative;
-        }
-
-        .concept-seven h1:before {
-            content: "fries";
-            position: absolute;
-            margin: auto;
-            left: 0;
-            right: 0;
-            max-width: 400px;
-            color: transparent;
-            letter-spacing: 10px;
-            text-shadow: none;
-        }
-
-        .concept-seven:hover h1:before {
-            transition: 0.6s ease;
-            color: rgba(255, 255, 255, 0.8);
-            animation: jump-out 0.6s ease forwards;
-        }
-
-        @keyframes jump-out {
-            0% {
-                opacity: 0;
-                transform: scale(1);
-            }
-            20% {
-                opacity: 1;
-            }
-            100% {
-                opacity: 0;
-                transform: scale(2);
-            }
-        }
-
-        .concept-eight {
-            background: url(https://meowlivia.s3.us-east-2.amazonaws.com/codepen/background/falls.jpg) center center / cover;
-        }
-
-        .concept-eight .word {
-            display: flex;
-            align-items: center;
-            justify-items: center;
-            width: 450px;
-            height: 80%;
-        }
-
-        .concept-eight .char {
-            flex: 1;
-            position: relative;
-        }
-
-        .concept-eight .char:before {
-            content: attr(data-content);
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            color: transparent;
-            text-shadow: none;
-        }
-
-        .concept-eight .word:hover .char:before {
-            transition: 0.6s ease;
-            color: rgba(255, 255, 255, 0.8);
-            animation: falls 1s ease forwards;
-        }
-
-        .concept-eight .word:hover .char:nth-child(1):before {
-            animation: falls 0.9s ease 0.2s forwards;
-        }
-
-        .concept-eight .word:hover .char:nth-child(2n + 3):before {
-            animation: falls 1s ease 0.3s forwards;
-        }
-
-        @keyframes falls {
-            0% {
-                opacity: 0;
-                top: 0;
-            }
-            20% {
-                opacity: 1;
-            }
-            100% {
-                opacity: 0;
-                top: 100px;
-            }
-        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
     </style>
 </head>
@@ -839,22 +395,34 @@
     </div>
 
 
-    <div class="container mx-auto max-w-4xl relative z-10 pt-8"> <div class="quote-container-outer">
+    <div class="container mx-auto max-w-4xl relative z-10 pt-8">
+        <div class="quote-container-outer">
             <div class="quote-container-inner">
                 <div class="quote-pattern" id="quote-pattern"></div>
                 <div class="relative z-10">
                     <h1 class="text-3xl md:text-4xl font-bold text-center mb-6 dynamic-text-main heading-font">VibeMe</h1>
-                    <div class="quote-animation-container text-center mb-8 min-h-[120px] md:min-h-[150px]">
+                    <div class="quote-animation-container text-center mb-4 min-h-[120px] md:min-h-[150px]">
                         <p id="quote-text" class="quote-text-font text-2xl md:text-3xl mb-4 leading-relaxed dynamic-text-main quote-text-animate" aria-live="polite"></p>
                         <p id="quote-author" class="text-lg italic dynamic-text-secondary author-font author-animate" aria-live="polite"></p>
                     </div>
 
-                    <div class="flex justify-center items-center space-x-3 mb-6 text-xl">
+                    <div id="quote-explanation-container" class="text-sm dynamic-text-secondary mb-6 hidden">
+                        <p id="quote-explanation-text"></p>
+                        <div id="explanation-loading" class="hidden text-center">
+                            <span class="loading-spinner"></span> Fetching insights...
+                        </div>
+                    </div>
+
+                    <div class="flex justify-center items-center space-x-2 mb-6 text-xl">
                         <button id="copy-quote-btn" title="Copy Quote" class="dynamic-text-secondary hover:text-white/80 transition-colors p-2 rounded-full hover:bg-white/10">
                             <i class="fas fa-copy"></i>
                         </button>
                         <button id="favorite-quote-btn" title="Favorite Quote" class="dynamic-text-secondary hover:text-white/80 transition-colors p-2 rounded-full hover:bg-white/10">
-                            <i class="far fa-heart"></i> </button>
+                            <i class="far fa-heart"></i>
+                        </button>
+                        <button id="explain-quote-btn" title="✨ Explain This Vibe" class="dynamic-text-secondary hover:text-white/80 transition-colors p-2 rounded-full hover:bg-white/10 gemini-feature-btn">
+                            <i class="fas fa-lightbulb"></i>
+                        </button>
                     </div>
 
                     <div class="flex flex-col items-center space-y-6">
@@ -864,9 +432,19 @@
                         </button>
                         <div class="flex items-center dynamic-text-secondary text-sm space-x-3">
                             <button id="timer-toggle-btn" title="Pause/Resume Timer" class="hover:text-white/80 transition-colors">
-                                <i class="fas fa-pause"></i> </button>
+                                <i class="fas fa-pause"></i>
+                            </button>
                             <span>New quote in <span id="countdown">10</span>s</span>
                         </div>
+
+                        <div class="mt-6 w-full max-w-md text-center">
+                            <input type="text" id="theme-input" placeholder="Enter a theme for a new vibe..." class="w-full px-3 py-2 rounded-md bg-white/20 text-white placeholder-white/70 focus:ring-2 focus:ring-[var(--color1)] focus:outline-none dynamic-text-secondary border border-transparent">
+                            <button id="generate-custom-quote-btn" class="mt-2 px-4 py-2 rounded-md dynamic-text-main gemini-feature-btn font-semibold">
+                                ✨ Vibe Scribe <span id="vibe-scribe-loading" class="hidden loading-spinner"></span>
+                            </button>
+                            <p id="vibe-scribe-feedback" class="text-xs dynamic-text-secondary mt-1 h-3"></p>
+                        </div>
+
                         <div class="flex space-x-3 md:space-x-4">
                             <a href="#" id="twitter-share" target="_blank" rel="noopener noreferrer" class="social-bubble"><i class="fab fa-twitter"></i></a>
                             <a href="#" id="facebook-share" target="_blank" rel="noopener noreferrer" class="social-bubble"><i class="fab fa-facebook-f"></i></a>
@@ -878,17 +456,19 @@
                 </div>
             </div>
         </div>
-        <p id="copy-feedback" class="text-center text-sm dynamic-text-secondary mt-3 h-4"></p> </div>
+        <p id="copy-feedback" class="text-center text-sm dynamic-text-secondary mt-3 h-4"></p>
+    </div>
 
     <script>
         // --- Data ---
         const CONFIG = {
             COUNTDOWN_DURATION: 10,
             MATRIX_COLUMN_WIDTH: 15,
-            MATRIX_MESSAGE_CHANCE: 0.15, // Chance of a column containing a binary message
-            MATRIX_UPDATE_INTERVAL: 1500, // How often to check/add new matrix columns
-            COPY_FEEDBACK_DURATION: 2000, // How long "Copied!" message shows
-            LOCALSTORAGE_FAVORITES_KEY: 'vibeMeFavorites'
+            MATRIX_MESSAGE_CHANCE: 0.15,
+            MATRIX_UPDATE_INTERVAL: 1500,
+            COPY_FEEDBACK_DURATION: 2000,
+            LOCALSTORAGE_FAVORITES_KEY: 'vibeMeFavorites',
+            GEMINI_API_URL: "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=", // Key will be empty string, handled by environment
         };
 
         const quotes = [
@@ -1813,7 +1393,7 @@
                 {color1: "#f1c40f", color2: "#f39c12", color3: "#e67e22"},
                 {color1: "#e74c3c", color2: "#c0392b", color3: "#96281b"}
             ],
-            originality: [
+            originality: [ // Also used for AI Vibe Scribe quotes
                 {color1: "#8e44ad", color2: "#9b59b6", color3: "#d2b4de"},
                 {color1: "#e74c3c", color2: "#f39c12", color3: "#3498db"},
                 {color1: "#1abc9c", color2: "#2ecc71", color3: "#3498db"},
@@ -1972,13 +1552,13 @@
                 {color1: "#00796B", color2: "#00897B", color3: "#26A69A"},
                 {color1: "#29B6F6", color2: "#4FC3F7", color3: "#81D4FA"}
             ],
-            favorites_empty: [ // For when favorites list is empty
+            favorites_empty: [
                 {color1: "#9E9E9E", color2: "#BDBDBD", color3: "#E0E0E0"}
             ],
-            category_empty: [ // For when a category filter results in no quotes (less likely now)
+            category_empty: [
                 {color1: "#FFAB91", color2: "#FF8A65", color3: "#FF7043"}
             ],
-            empty: [ // For when the main quotes array is empty
+            empty: [
                 {color1: "#78909C", color2: "#90A4AE", color3: "#B0BEC5"}
             ]
         };
@@ -1992,7 +1572,7 @@
             family: { quote: "'Lato', sans-serif", heading: "'Nunito', sans-serif", author: "'Nunito', sans-serif" },
             trust: { quote: "'Source Sans Pro', sans-serif", heading: "'Raleway', sans-serif", author: "'Raleway', sans-serif" },
             values: { quote: "'Playfair Display', serif", heading: "'Poppins', sans-serif", author: "'Poppins', sans-serif" },
-            originality: { quote: "'Roboto Mono', monospace", heading: "'Poppins', sans-serif", author: "'Roboto Mono', monospace" },
+            originality: { quote: "'Roboto Mono', monospace", heading: "'Poppins', sans-serif", author: "'Roboto Mono', monospace" }, // Also used for AI Vibe Scribe
             change: { quote: "'Montserrat', sans-serif", heading: "'Poppins', sans-serif", author: "'Lato', sans-serif" },
             adversity_new: { quote: "'Oswald', sans-serif", heading: "'Roboto Slab', serif", author: "'Merriweather', serif" },
             truth_new: { quote: "'Source Sans Pro', sans-serif", heading: "'Raleway', sans-serif", author: "'Nunito', sans-serif" },
@@ -2041,27 +1621,15 @@
             "squares", "triangles", "lines"
         ];
 
-        const binaryMessages = [ // Short, positive words encoded in binary
-            "01001100 01101111 01110110 01100101", // Love
-            "01001000 01101111 01110000 01100101", // Hope
-            "01001010 01101111 01111001",          // Joy
-            "01001011 01101001 01101110 01100100 01101110 01100101 01110011 01110011", // Kindness
-            "01000011 01101111 01110101 01110010 01100001 01100111 01100101", // Courage
-            "01010000 01100101 01100001 01100011 01100101", // Peace
-            "01001000 01100001 01110000 01110000 01101001 01101110 01100101 01110011 01110011", // Happiness
-            "01000110 01110010 01101001 01100101 01101110 01100100 01110011 01101000 01101001 01110000", // Friendship
-            "01000010 01100101 01101100 01101001 01100101 01110110 01100101", // Believe
-            "01000100 01110010 01100101 01100001 01101101", // Dream
-            "01001001 01101110 01110011 01110000 01101001 01110010 01100101", // Inspire
-            "01000011 01110010 01100101 01100001 01110100 01100101", // Create
-            "01001000 01100101 01100001 01101100", // Heal
-            "01000111 01110010 01101111 01110111", // Grow
-            "01001100 01101001 01100111 01101000 01110100", // Light
-            "01010100 01110010 01110101 01110011 01110100", // Trust
-            "01000110 01100001 01101001 01110100 01101000", // Faith
-            "01010000 01100001 01110011 01110011 01101001 01101111 01101110", // Passion
-            "01010111 01101001 01110011 01100100 01101111 01101101", // Wisdom
-            "01000010 01100101 01100001 01110101 01110100 01111001"  // Beauty
+        const binaryMessages = [
+            "01001100 01101111 01110110 01100101", "01001000 01101111 01110000 01100101", "01001010 01101111 01111001",
+            "01001011 01101001 01101110 01100100 01101110 01100101 01110011 01110011", "01000011 01101111 01110101 01110010 01100001 01100111 01100101",
+            "01010000 01100101 01100001 01100011 01100101", "01001000 01100001 01110000 01110000 01101001 01101110 01100101 01110011 01110011",
+            "01000110 01110010 01101001 01100101 01101110 01100100 01110011 01101000 01101001 01110000", "01000010 01100101 01101100 01101001 01100101 01110110 01100101",
+            "01000100 01110010 01100101 01100001 01101101", "01001001 01101110 01110011 01110000 01101001 01110010 01100101", "01000011 01110010 01100101 01100001 01110100 01100101",
+            "01001000 01100101 01100001 01101100", "01000111 01110010 01101111 01110111", "01001100 01101001 01100111 01101000 01110100",
+            "01010100 01110010 01110101 01110011 01110100", "01000110 01100001 01101001 01110100 01101000", "01010000 01100001 01110011 01110011 01101001 01101111 01101110",
+            "01010111 01101001 01110011 01100100 01101111 01101101", "01000010 01100101 01100001 01110101 01110100 01111001"
         ];
 
         // --- State Variables ---
@@ -2075,37 +1643,34 @@
         let matrixInterval = null;
         let activeColumns = [];
         let visualEffectsEnabled = true;
-        let activeCategory = 'All'; // No UI to change this, so it's always 'All' unless programmatically changed for favorites
+        let activeCategory = 'All';
         let favoriteQuotes = [];
         let copyTimeout = null;
-
         let glowHue = 0;
-        let glowAnimationId = null; // To store requestAnimationFrame ID for hue cycling
-
-        const glowColorProfiles = [ // Defines different styles for the glow
-            { name: "Vibrant", saturation: 100, lightness: 60, speed: 0.5 },
-            { name: "Pastel", saturation: 70, lightness: 75, speed: 0.3 },
-            { name: "Deep", saturation: 90, lightness: 50, speed: 0.6 },
-            { name: "Bright", saturation: 100, lightness: 70, speed: 0.4 },
-            { name: "Aurora", saturation: 85, lightness: 65, speed: 0.8 },
-            { name: "Mystic", saturation: 75, lightness: 55, speed: 0.25 }
+        let glowAnimationId = null;
+        const glowColorProfiles = [
+            { name: "Vibrant", saturation: 100, lightness: 60, speed: 0.5 }, { name: "Pastel", saturation: 70, lightness: 75, speed: 0.3 },
+            { name: "Deep", saturation: 90, lightness: 50, speed: 0.6 }, { name: "Bright", saturation: 100, lightness: 70, speed: 0.4 },
+            { name: "Aurora", saturation: 85, lightness: 65, speed: 0.8 }, { name: "Mystic", saturation: 75, lightness: 55, speed: 0.25 }
         ];
         let currentGlowProfileIndex = 0;
-        let glowProfileChangeInterval = null; // Interval to change profiles
+        let glowProfileChangeInterval = null;
+
+        // --- DOM Elements (Gemini specific) ---
+        let explainQuoteBtn, quoteExplanationContainer, quoteExplanationText, explanationLoading;
+        let themeInput, generateCustomQuoteBtn, vibeScribeLoading, vibeScribeFeedback;
 
 
         // --- DOM Elements ---
         let quoteTextEl, quoteAuthorEl, generateBtn, countdownEl, timerToggleBtn,
             quotePatternEl, rootStyle, socialLinks = {}, matrixBg,
-            /* categoryFiltersEl REMOVED */
             copyQuoteBtn, favoriteQuoteBtn, copyFeedbackEl,
             settingsToggleEl, settingsPanelEl, effectsToggleCheckboxEl, clearFavoritesBtnEl;
 
 
         // --- Utility Functions ---
         function normalizeHex(color) {
-            /* ... same as before ... */
-            if (typeof color !== 'string') return '#cccccc'; // Default color if input is invalid
+            if (typeof color !== 'string') return '#cccccc';
             if (color.startsWith('#')) return color;
             if (color.startsWith('rgb(')) {
                 const rgb = color.match(/\d+/g);
@@ -2113,117 +1678,80 @@
                     return `#${((1 << 24) + (parseInt(rgb[0]) << 16) + (parseInt(rgb[1]) << 8) + parseInt(rgb[2])).toString(16).slice(1)}`;
                 }
             }
-            return '#cccccc'; // Default fallback
+            return '#cccccc';
         }
 
         function lightenColorToRgba(color, percent, alpha = 1.0) {
-            /* ... same as before ... */
             try {
                 let hex = normalizeHex(color);
                 let r = parseInt(hex.substring(1, 3), 16);
                 let g = parseInt(hex.substring(3, 5), 16);
                 let b = parseInt(hex.substring(5, 7), 16);
-
                 r = Math.min(255, r + Math.round(percent / 100 * (255 - r)));
                 g = Math.min(255, g + Math.round(percent / 100 * (255 - g)));
                 b = Math.min(255, b + Math.round(percent / 100 * (255 - b)));
-
                 return `rgba(${r}, ${g}, ${b}, ${alpha})`;
-            } catch (e) {
-                // console.error("Error lightening color:", e, "Input color:", color);
-                return `rgba(255, 255, 255, ${alpha})`; // Fallback to white with alpha
-            }
+            } catch (e) { return `rgba(255, 255, 255, ${alpha})`; }
         }
 
-
         function darkenColor(color, percent) {
-            /* ... same as before ... */
             try {
                 let hex = normalizeHex(color);
                 let r = parseInt(hex.substring(1, 3), 16);
                 let g = parseInt(hex.substring(3, 5), 16);
                 let b = parseInt(hex.substring(5, 7), 16);
-
                 r = Math.max(0, r - Math.round(percent / 100 * r));
                 g = Math.max(0, g - Math.round(percent / 100 * g));
                 b = Math.max(0, b - Math.round(percent / 100 * b));
-
                 return `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)}`;
-            } catch (e) {
-                // console.error("Error darkening color:", e, "Input color:", color);
-                return '#333333'; // Fallback to dark gray
-            }
+            } catch (e) { return '#333333'; }
         }
-
 
         // --- Visual Effects (Matrix & Glow) ---
         function createMatrixEffect() {
-            /* ... same as before ... */
             if (!matrixBg || !visualEffectsEnabled) return;
-
             const columnCount = Math.floor(window.innerWidth / CONFIG.MATRIX_COLUMN_WIDTH);
             const neededColumns = columnCount - activeColumns.length;
-
             if (neededColumns > 0) {
                 for (let i = 0; i < neededColumns; i++) createMatrixColumn();
             } else if (neededColumns < 0) {
-                // Remove excess columns if window is resized smaller
                 const columnsToRemove = Math.abs(neededColumns);
                 for (let i = 0; i < columnsToRemove && activeColumns.length > 0; i++) {
                     const column = activeColumns.pop();
                     if (column) {
-                        column.classList.remove('visible'); // Fade out
-                        setTimeout(() => { // Remove from DOM after fade
-                            if (column.parentNode === matrixBg) matrixBg.removeChild(column);
-                        }, 500);
+                        column.classList.remove('visible');
+                        setTimeout(() => { if (column.parentNode === matrixBg) matrixBg.removeChild(column); }, 500);
                     }
                 }
             }
         }
 
         function createMatrixColumn() {
-            /* ... same as before ... */
             if (!matrixBg || !visualEffectsEnabled) return;
-
             const column = document.createElement('div');
             column.className = 'binary-column';
-            column.style.left = `${Math.random() * 100}%`; // Random horizontal position
-
-            const duration = 5 + Math.random() * 10; // Random duration between 5-15 seconds
+            column.style.left = `${Math.random() * 100}%`;
+            const duration = 5 + Math.random() * 10;
             column.style.animationDuration = `${duration}s`;
-            column.style.animationDelay = `${Math.random() * 5}s`; // Stagger start times
-
+            column.style.animationDelay = `${Math.random() * 5}s`;
             if (Math.random() > 0.7) column.classList.add('fast');
             else if (Math.random() < 0.3) column.classList.add('slow');
-
             let binaryContent = '';
-            // Chance to insert a binary message
             if (Math.random() < CONFIG.MATRIX_MESSAGE_CHANCE && binaryMessages.length > 0) {
                 const message = binaryMessages[Math.floor(Math.random() * binaryMessages.length)];
-                message.split(' ').forEach(part => {
-                    binaryContent += Math.random() > 0.8 ? `<span class="highlight">${part}</span> ` : `${part} `;
-                });
-            } else { // Generate random binary string
-                const length = 10 + Math.floor(Math.random() * 40); // Random length
+                message.split(' ').forEach(part => { binaryContent += Math.random() > 0.8 ? `<span class="highlight">${part}</span> ` : `${part} `; });
+            } else {
+                const length = 10 + Math.floor(Math.random() * 40);
                 for (let j = 0; j < length; j++) {
                     const char = Math.random() > 0.5 ? '1' : '0';
                     binaryContent += Math.random() > 0.95 ? `<span class="highlight">${char}</span>` : char;
-                    if (j > 0 && (j + 1) % 8 === 0 && Math.random() > 0.5) binaryContent += ' '; // Add space sometimes
+                    if (j > 0 && (j + 1) % 8 === 0 && Math.random() > 0.5) binaryContent += ' ';
                 }
             }
             column.innerHTML = binaryContent.trim();
-
             matrixBg.appendChild(column);
             activeColumns.push(column);
-
-            // Force reflow for transition to apply
-            requestAnimationFrame(() => {
-                setTimeout(() => { // Delay slightly to ensure it's in DOM
-                    column.classList.add('visible');
-                }, 10);
-            });
-
-
+            requestAnimationFrame(() => { setTimeout(() => { column.classList.add('visible'); }, 10); });
             column.addEventListener('animationend', () => {
                 if (column.parentNode === matrixBg) matrixBg.removeChild(column);
                 activeColumns = activeColumns.filter(c => c !== column);
@@ -2231,276 +1759,142 @@
         }
 
         function updateMatrixColumns() {
-            /* ... same as before ... */
             if (!matrixBg || !visualEffectsEnabled) {
-                // Clear all existing columns if effects are disabled
-                activeColumns.forEach(col => {
-                    if (col.parentNode) col.parentNode.removeChild(col);
-                });
-                activeColumns = [];
-                return;
+                activeColumns.forEach(col => { if (col.parentNode) col.parentNode.removeChild(col); });
+                activeColumns = []; return;
             }
-
             const targetColumnCount = Math.floor(window.innerWidth / CONFIG.MATRIX_COLUMN_WIDTH);
             if (activeColumns.length < targetColumnCount) {
-                // Add a few columns at a time to avoid performance hit, up to target
                 const columnsToAdd = Math.min(5, targetColumnCount - activeColumns.length);
                 for (let i = 0; i < columnsToAdd; i++) createMatrixColumn();
             }
         }
 
-        // NEW: Function to animate the mouse glow color smoothly
         function animateMouseGlowColor() {
             if (!visualEffectsEnabled || !mouseGlowElement) {
-                if (glowAnimationId) {
-                    cancelAnimationFrame(glowAnimationId);
-                    glowAnimationId = null;
-                }
+                if (glowAnimationId) { cancelAnimationFrame(glowAnimationId); glowAnimationId = null; }
                 return;
             }
-
             const profile = glowColorProfiles[currentGlowProfileIndex];
-            glowHue = (glowHue + profile.speed) % 360; // Increment hue based on profile speed
+            glowHue = (glowHue + profile.speed) % 360;
             mouseGlowElement.style.setProperty('--glow-hue', glowHue.toFixed(2));
-
-            // Saturation and Lightness are set when profile changes, or could be animated too
-            // For now, they change with the profile.
-
             glowAnimationId = requestAnimationFrame(animateMouseGlowColor);
         }
 
-        // NEW: Function to change the current glow profile
         function changeGlowProfile() {
             if (!visualEffectsEnabled || !mouseGlowElement) return;
-
             currentGlowProfileIndex = (currentGlowProfileIndex + 1) % glowColorProfiles.length;
             const newProfile = glowColorProfiles[currentGlowProfileIndex];
             mouseGlowElement.style.setProperty('--glow-saturation', newProfile.saturation + '%');
             mouseGlowElement.style.setProperty('--glow-lightness', newProfile.lightness + '%');
         }
 
-
         function setupMouseGlow() {
             if (!mouseGlowElement) return;
-
-            // Event listeners for mouse movement and interaction
             document.addEventListener('mousemove', (e) => {
                 if (!visualEffectsEnabled || !mouseGlowElement) return;
-                window.requestAnimationFrame(() => { // Debounce with rAF
+                window.requestAnimationFrame(() => {
                     mouseGlowElement.style.left = `${e.clientX}px`;
                     mouseGlowElement.style.top = `${e.clientY}px`;
-                    mouseGlowElement.style.opacity = '0.9'; // Make visible on move
+                    mouseGlowElement.style.opacity = '0.9';
                 });
             });
-
-            // Show/hide glow when mouse enters/leaves the document
-            document.addEventListener('mouseover', () => { // Use mouseover for document enter
-                if (visualEffectsEnabled && mouseGlowElement) {
-                    mouseGlowElement.style.opacity = '0.9';
-                }
-            });
-            document.addEventListener('mouseout', () => { // Use mouseout for document leave
-                if (mouseGlowElement) {
-                    mouseGlowElement.style.opacity = '0';
-                }
-            });
-
-
-            // Add hover effect to interactive elements
+            document.addEventListener('mouseover', () => { if (visualEffectsEnabled && mouseGlowElement) mouseGlowElement.style.opacity = '0.9'; });
+            document.addEventListener('mouseout', () => { if (mouseGlowElement) mouseGlowElement.style.opacity = '0'; });
             const interactiveElements = document.querySelectorAll('a, button, .social-bubble, .quote-container-inner, .quote-container-outer');
             interactiveElements.forEach(el => {
-                el.addEventListener('mouseenter', () => {
-                    if (visualEffectsEnabled && mouseGlowElement) mouseGlowElement.classList.add('hover-effect');
-                });
-                el.addEventListener('mouseleave', () => {
-                    if (mouseGlowElement) mouseGlowElement.classList.remove('hover-effect');
-                });
+                el.addEventListener('mouseenter', () => { if (visualEffectsEnabled && mouseGlowElement) mouseGlowElement.classList.add('hover-effect'); });
+                el.addEventListener('mouseleave', () => { if (mouseGlowElement) mouseGlowElement.classList.remove('hover-effect'); });
             });
         }
 
         function toggleVisualEffects(enable) {
             visualEffectsEnabled = enable;
             document.body.classList.toggle('effects-disabled', !enable);
-
             if (enable) {
                 if (mouseGlowElement) {
-                    // Set initial profile S/L values
                     const initialProfile = glowColorProfiles[currentGlowProfileIndex];
                     mouseGlowElement.style.setProperty('--glow-saturation', initialProfile.saturation + '%');
                     mouseGlowElement.style.setProperty('--glow-lightness', initialProfile.lightness + '%');
-                    // Opacity will be handled by mousemove/mouseover
                 }
-                // Start glow color animations if not already running
-                if (!glowAnimationId && mouseGlowElement) {
-                    animateMouseGlowColor();
-                }
-                if (!glowProfileChangeInterval && mouseGlowElement) {
-                    glowProfileChangeInterval = setInterval(changeGlowProfile, 7000); // Change profile every 7 seconds
-                }
-
-                // Matrix effects
-                if (matrixBg) { // Check if matrixBg exists
-                    createMatrixEffect(); // Initial columns
-                    if (!matrixInterval) matrixInterval = setInterval(updateMatrixColumns, CONFIG.MATRIX_UPDATE_INTERVAL);
-                }
+                if (!glowAnimationId && mouseGlowElement) animateMouseGlowColor();
+                if (!glowProfileChangeInterval && mouseGlowElement) glowProfileChangeInterval = setInterval(changeGlowProfile, 7000);
+                if (matrixBg) { createMatrixEffect(); if (!matrixInterval) matrixInterval = setInterval(updateMatrixColumns, CONFIG.MATRIX_UPDATE_INTERVAL); }
             } else {
-                // Effects disabled
                 if (mouseGlowElement) mouseGlowElement.style.opacity = '0';
-                if (glowAnimationId) {
-                    cancelAnimationFrame(glowAnimationId);
-                    glowAnimationId = null;
-                }
-                if (glowProfileChangeInterval) {
-                    clearInterval(glowProfileChangeInterval);
-                    glowProfileChangeInterval = null;
-                }
-
-                // Matrix effects
-                if (matrixBg) { // Check if matrixBg exists
-                    clearInterval(matrixInterval);
-                    matrixInterval = null;
-                    updateMatrixColumns(); // Clears existing columns
-                }
+                if (glowAnimationId) { cancelAnimationFrame(glowAnimationId); glowAnimationId = null; }
+                if (glowProfileChangeInterval) { clearInterval(glowProfileChangeInterval); glowProfileChangeInterval = null; }
+                if (matrixBg) { clearInterval(matrixInterval); matrixInterval = null; updateMatrixColumns(); }
             }
         }
 
         // --- Favorite Quotes ---
         function loadFavorites() {
-            /* ... same as before ... */
             const storedFavorites = localStorage.getItem(CONFIG.LOCALSTORAGE_FAVORITES_KEY);
-            if (storedFavorites) {
-                try {
-                    favoriteQuotes = JSON.parse(storedFavorites);
-                } catch (e) {
-                    console.error("Error parsing favorites from localStorage:", e);
-                    favoriteQuotes = []; // Reset if parsing fails
-                }
-            }
+            if (storedFavorites) { try { favoriteQuotes = JSON.parse(storedFavorites); } catch (e) { console.error("Error parsing favorites:", e); favoriteQuotes = []; } }
         }
-
-        function saveFavorites() {
-            /* ... same as before ... */
-            localStorage.setItem(CONFIG.LOCALSTORAGE_FAVORITES_KEY, JSON.stringify(favoriteQuotes));
-        }
-
-        function isQuoteFavorite(quote) {
-            /* ... same as before ... */
-            if (!quote) return false;
-            return favoriteQuotes.some(fav => fav.text === quote.text && fav.author === quote.author);
-        }
+        function saveFavorites() { localStorage.setItem(CONFIG.LOCALSTORAGE_FAVORITES_KEY, JSON.stringify(favoriteQuotes)); }
+        function isQuoteFavorite(quote) { if (!quote) return false; return favoriteQuotes.some(fav => fav.text === quote.text && fav.author === quote.author); }
 
         function toggleFavoriteQuote() {
-            /* ... same as before, no changes needed here for filter removal ... */
             if (!currentQuote || currentQuote.category === 'favorites_empty' || currentQuote.category === 'category_empty' || currentQuote.category === 'empty') return;
-
             const index = favoriteQuotes.findIndex(fav => fav.text === currentQuote.text && fav.author === currentQuote.author);
-            if (index > -1) {
-                favoriteQuotes.splice(index, 1); // Remove from favorites
-            } else {
-                favoriteQuotes.push(currentQuote); // Add to favorites
-            }
-            saveFavorites();
-            updateFavoriteButtonUI();
-
-            // If user was somehow viewing favorites and it's now empty, go back to 'All'
-            // This scenario is less likely without direct filter pills but good for robustness
-            if (activeCategory === 'Favorites' && favoriteQuotes.length === 0) {
-                activeCategory = 'All'; // Set activeCategory directly
-                generateQuote(); // Refresh to show an 'All' quote or the empty favorites message
-            }
+            if (index > -1) favoriteQuotes.splice(index, 1); else favoriteQuotes.push(currentQuote);
+            saveFavorites(); updateFavoriteButtonUI();
+            if (activeCategory === 'Favorites' && favoriteQuotes.length === 0) { activeCategory = 'All'; generateQuote(); }
         }
 
-
         function updateFavoriteButtonUI() {
-            /* ... same as before ... */
             if (!favoriteQuoteBtn) return;
             const icon = favoriteQuoteBtn.querySelector('i');
             if (isQuoteFavorite(currentQuote) && currentQuote.category !== 'favorites_empty' && currentQuote.category !== 'category_empty' && currentQuote.category !== 'empty') {
-                icon.classList.remove('far');
-                icon.classList.add('fas', 'text-pink-500');
-                favoriteQuoteBtn.title = "Remove from Favorites";
+                icon.classList.remove('far'); icon.classList.add('fas', 'text-pink-500'); favoriteQuoteBtn.title = "Remove from Favorites";
             } else {
-                icon.classList.remove('fas', 'text-pink-500');
-                icon.classList.add('far');
-                favoriteQuoteBtn.title = "Add to Favorites";
+                icon.classList.remove('fas', 'text-pink-500'); icon.classList.add('far'); favoriteQuoteBtn.title = "Add to Favorites";
             }
         }
-
 
         // --- Core Quote Generator Functions ---
         function selectNextQuote() {
             let eligibleQuotes = [];
-
-            // If a way to view favorites is implemented, it might set activeCategory to 'Favorites'
             if (activeCategory === 'Favorites') {
                 eligibleQuotes = [...favoriteQuotes];
-                if (eligibleQuotes.length === 0) {
-                    return { text: "No favorites yet. Click the heart to add some!", author: "VibeMe", category: "favorites_empty" };
-                }
-            } else { // Default is 'All'
-                eligibleQuotes = [...quotes];
-            }
-
-            if (!eligibleQuotes || eligibleQuotes.length === 0) {
-                // This case is now mainly for if the main quotes array is somehow empty
-                return { text: "No vibes to share right now. Check back later!", author: "VibeMe", category: "empty" };
-            }
-
-            let randomIndex;
-            let newQuote;
-
-            if (eligibleQuotes.length === 1 && currentQuote !== eligibleQuotes[0]) return eligibleQuotes[0]; // If only one and it's new
-            if (eligibleQuotes.length === 1 && currentQuote === eligibleQuotes[0]) return eligibleQuotes[0]; // If only one and it's the same (e.g. single favorite)
-
-
-            let attemptCount = 0;
-            const maxAttempts = eligibleQuotes.length > 1 ? eligibleQuotes.length * 2 : 1; // Avoid infinite loop if all quotes are the same
-
+                if (eligibleQuotes.length === 0) return { text: "No favorites yet. Click the heart to add some!", author: "VibeMe", category: "favorites_empty" };
+            } else { eligibleQuotes = [...quotes]; }
+            if (!eligibleQuotes || eligibleQuotes.length === 0) return { text: "No vibes to share right now. Check back later!", author: "VibeMe", category: "empty" };
+            let randomIndex, newQuote, attemptCount = 0;
+            const maxAttempts = eligibleQuotes.length > 1 ? eligibleQuotes.length * 2 : 1;
+            if (eligibleQuotes.length === 1) return eligibleQuotes[0]; // No need to find a different one if only one exists
             do {
                 randomIndex = Math.floor(Math.random() * eligibleQuotes.length);
                 newQuote = eligibleQuotes[randomIndex];
                 attemptCount++;
-            } while (newQuote === currentQuote && eligibleQuotes.length > 1 && attemptCount < maxAttempts); // Ensure new quote is different if possible
-
+            } while (newQuote === currentQuote && attemptCount < maxAttempts);
             return newQuote;
         }
 
         function getThemeColors(category) {
-            /* ... same as before ... */
-            const safeCategory = category && colorPalettes[category] ? category : 'values'; // Fallback category
+            const safeCategory = category && colorPalettes[category] ? category : 'values';
             const palettes = colorPalettes[safeCategory];
-
             if (!palettes || palettes.length === 0) {
-                // console.warn(`No palettes found for category: ${safeCategory}, using fallback 'values'`);
-                const fallbackPalettes = colorPalettes['values']; // Ultimate fallback
-                if (!fallbackPalettes || fallbackPalettes.length === 0) {
-                    // This should ideally not happen if 'values' is always defined
-                    // console.error("Critical: Fallback 'values' palettes are missing.");
-                    return { color1: '#aaaaaa', color2: '#bbbbbb', color3: '#cccccc' }; // Hardcoded absolute fallback
-                }
+                const fallbackPalettes = colorPalettes['values'];
+                if (!fallbackPalettes || fallbackPalettes.length === 0) return { color1: '#aaaaaa', color2: '#bbbbbb', color3: '#cccccc' };
                 return fallbackPalettes[Math.floor(Math.random() * fallbackPalettes.length)];
             }
             return palettes[Math.floor(Math.random() * palettes.length)];
         }
 
-
         function applyThemeStyles(category) {
-            /* ... same as before ... */
             const safeCategory = category && fontThemes[category] ? category : 'default';
-            const fonts = fontThemes[safeCategory] || fontThemes.default; // Fallback to default fonts
-
+            const fonts = fontThemes[safeCategory] || fontThemes.default;
             currentThemeColors = getThemeColors(category);
-
-            // Define base colors from the theme
-            const baseBgColor = currentThemeColors.color3 || '#cccccc'; // Use color3 as a base for background tints
-            const containerBgColor = lightenColorToRgba(baseBgColor, 85, 1.0); // Lighter, opaque for outer container feel
-            const innerBoxColor = lightenColorToRgba(baseBgColor, 90, 0.15); // Very light, translucent for glass effect
-
-            const baseTextColor = currentThemeColors.color1 || '#aaaaaa'; // Use color1 as a base for text
-            const textColorMain = darkenColor(baseTextColor, 60); // Darker for main text
-            const textColorSecondary = darkenColor(baseTextColor, 40); // Slightly lighter for secondary text
-            const socialIconBg = darkenColor(baseTextColor, 20); // For social icons background
-
+            const baseBgColor = currentThemeColors.color3 || '#cccccc';
+            const containerBgColor = lightenColorToRgba(baseBgColor, 85, 1.0);
+            const innerBoxColor = lightenColorToRgba(baseBgColor, 90, 0.15);
+            const baseTextColor = currentThemeColors.color1 || '#aaaaaa';
+            const textColorMain = darkenColor(baseTextColor, 60);
+            const textColorSecondary = darkenColor(baseTextColor, 40);
+            const socialIconBg = darkenColor(baseTextColor, 20);
             rootStyle.setProperty('--color1', currentThemeColors.color1);
             rootStyle.setProperty('--color2', currentThemeColors.color2);
             rootStyle.setProperty('--color3', currentThemeColors.color3);
@@ -2509,21 +1903,20 @@
             rootStyle.setProperty('--text-color-main', textColorMain);
             rootStyle.setProperty('--text-color-secondary', textColorSecondary);
             rootStyle.setProperty('--social-icon-bg', socialIconBg);
-
             rootStyle.setProperty('--font-quote', fonts.quote);
             rootStyle.setProperty('--font-heading', fonts.heading);
             rootStyle.setProperty('--font-author', fonts.author);
-
-            // Update generate button gradient specifically
-            if (generateBtn) {
-                generateBtn.style.background = `linear-gradient(135deg, ${currentThemeColors.color1} 0%, ${currentThemeColors.color2} 100%)`;
-            }
+            if (generateBtn) generateBtn.style.background = `linear-gradient(135deg, ${currentThemeColors.color1} 0%, ${currentThemeColors.color2} 100%)`;
         }
 
-        function animateQuoteChange(newQuote) {
-            /* ... same as before ... */
+        function animateQuoteChange(newQuote, isCustomVibe = false) {
             if (isAnimating || !quoteTextEl || !quoteAuthorEl) return;
             isAnimating = true;
+
+            // Clear previous explanation
+            if (quoteExplanationContainer) quoteExplanationContainer.classList.add('hidden');
+            if (quoteExplanationText) quoteExplanationText.textContent = '';
+
 
             quoteTextEl.classList.add('exit-active');
             quoteAuthorEl.classList.add('author-exit');
@@ -2531,239 +1924,234 @@
             setTimeout(() => {
                 currentQuote = newQuote;
                 quoteTextEl.textContent = currentQuote.text;
-                quoteAuthorEl.textContent = currentQuote.author ? `— ${currentQuote.author}` : '— Anonymous';
-                applyThemeStyles(currentQuote.category || 'values'); // Apply new theme
-
-                // For glitch effect
+                quoteAuthorEl.textContent = currentQuote.author ? `— ${currentQuote.author}` : (isCustomVibe ? `— ✨ Vibe Scribe` : `— Anonymous`);
+                applyThemeStyles(currentQuote.category || 'values');
                 quoteTextEl.dataset.text = currentQuote.text;
 
-                // Start enter animation
-                setTimeout(() => { // Stagger for effect
+                setTimeout(() => {
                     quoteTextEl.classList.remove('exit-active');
                     quoteAuthorEl.classList.remove('author-exit');
                     quoteTextEl.classList.add('enter-active');
                     quoteAuthorEl.classList.add('author-enter');
-                    if (visualEffectsEnabled) quoteTextEl.classList.add('glitch-effect'); // Add glitch during enter
-                }, 50); // Small delay after text content update
+                    if (visualEffectsEnabled) quoteTextEl.classList.add('glitch-effect');
+                }, 50);
 
-                // Clean up after animation
                 setTimeout(() => {
                     quoteTextEl.classList.remove('enter-active', 'glitch-effect');
                     quoteAuthorEl.classList.remove('author-enter');
                     isAnimating = false;
                     updateSocialLinks();
                     updateFavoriteButtonUI();
-                }, 800); // Duration of enter animation
-            }, 600); // Duration of exit animation
+                }, 800);
+            }, 600);
         }
 
-
         function generateQuote() {
-            /* ... same as before ... */
             if (isAnimating) return;
-
             const newQuote = selectNextQuote();
-            if (!newQuote) {
-                // console.error("Failed to select a new quote.");
-                // Display a fallback or error message if needed, though selectNextQuote should handle empty states.
-                quoteTextEl.textContent = "Error loading quote.";
-                quoteAuthorEl.textContent = "";
-                return;
-            }
-
+            if (!newQuote) { quoteTextEl.textContent = "Error loading quote."; quoteAuthorEl.textContent = ""; return; }
             animateQuoteChange(newQuote);
             generatePattern();
             if (!isTimerPaused) resetTimer();
-            else if (countdownEl) countdownEl.textContent = CONFIG.COUNTDOWN_DURATION; // Reset display if paused
+            else if (countdownEl) countdownEl.textContent = CONFIG.COUNTDOWN_DURATION;
         }
 
         function resetTimer() {
-            /* ... same as before ... */
             clearInterval(timerInterval);
             countdown = CONFIG.COUNTDOWN_DURATION;
             if (countdownEl) countdownEl.textContent = countdown;
-
-            if (isTimerPaused) return; // Don't start new interval if paused
-
+            if (isTimerPaused) return;
             timerInterval = setInterval(() => {
                 countdown--;
                 if (countdownEl) countdownEl.textContent = countdown;
-                if (countdown <= 0) {
-                    generateQuote(); // This will also call resetTimer() again
-                }
+                if (countdown <= 0) generateQuote();
             }, 1000);
         }
 
         function generatePattern() {
-            /* ... same as before ... */
             if (!quotePatternEl) return;
             const patternType = patterns[Math.floor(Math.random() * patterns.length)];
             let patternCSS = '';
-            const patternColor = getRandomColor(); // Get a random HSL color for the pattern
-
+            const patternColor = getRandomColor();
             switch(patternType) {
-                case 'polka-dots':
-                    patternCSS = `radial-gradient(${patternColor} 2px, transparent 2px)`;
-                    break;
-                case 'zigzag':
-                    patternCSS = `linear-gradient(135deg, ${patternColor} 25%, transparent 25%) -10px 0, linear-gradient(225deg, ${patternColor} 25%, transparent 25%) -10px 0, linear-gradient(315deg, ${patternColor} 25%, transparent 25%), linear-gradient(45deg, ${patternColor} 25%, transparent 25%)`;
-                    break;
-                case 'waves':
-                    patternCSS = `radial-gradient(circle at 100% 50%, transparent 20%, ${patternColor} 21%, ${patternColor} 34%, transparent 35%, transparent), radial-gradient(circle at 0% 50%, transparent 20%, ${patternColor} 21%, ${patternColor} 34%, transparent 35%, transparent) 0 -20px`;
-                    break;
-                case 'crosses':
-                    patternCSS = `linear-gradient(${patternColor} 1px, transparent 1px), linear-gradient(90deg, ${patternColor} 1px, transparent 1px)`;
-                    break;
-                case 'bubbles':
-                     patternCSS = `radial-gradient(circle at center, ${patternColor} 0%, transparent 20%)`;
-                     break;
-                case 'squares':
-                    patternCSS = `linear-gradient(45deg, ${patternColor} 25%, transparent 25%, transparent 75%, ${patternColor} 75%, ${patternColor}), linear-gradient(45deg, ${patternColor} 25%, transparent 25%, transparent 75%, ${patternColor} 75%, ${patternColor}) 10px 10px`;
-                    break;
-                case 'triangles':
-                    patternCSS = `linear-gradient(45deg, ${patternColor} 50%, transparent 50%)`;
-                    break;
-                case 'lines':
-                    patternCSS = `repeating-linear-gradient(45deg, ${patternColor}, ${patternColor} 1px, transparent 1px, transparent 6px)`;
-                    break;
-                default:
-                    patternCSS = `radial-gradient(${patternColor} 2px, transparent 2px)`; // Fallback
+                case 'polka-dots': patternCSS = `radial-gradient(${patternColor} 2px, transparent 2px)`; break;
+                case 'zigzag': patternCSS = `linear-gradient(135deg, ${patternColor} 25%, transparent 25%) -10px 0, linear-gradient(225deg, ${patternColor} 25%, transparent 25%) -10px 0, linear-gradient(315deg, ${patternColor} 25%, transparent 25%), linear-gradient(45deg, ${patternColor} 25%, transparent 25%)`; break;
+                case 'waves': patternCSS = `radial-gradient(circle at 100% 50%, transparent 20%, ${patternColor} 21%, ${patternColor} 34%, transparent 35%, transparent), radial-gradient(circle at 0% 50%, transparent 20%, ${patternColor} 21%, ${patternColor} 34%, transparent 35%, transparent) 0 -20px`; break;
+                case 'crosses': patternCSS = `linear-gradient(${patternColor} 1px, transparent 1px), linear-gradient(90deg, ${patternColor} 1px, transparent 1px)`; break;
+                case 'bubbles': patternCSS = `radial-gradient(circle at center, ${patternColor} 0%, transparent 20%)`; break;
+                case 'squares': patternCSS = `linear-gradient(45deg, ${patternColor} 25%, transparent 25%, transparent 75%, ${patternColor} 75%, ${patternColor}), linear-gradient(45deg, ${patternColor} 25%, transparent 25%, transparent 75%, ${patternColor} 75%, ${patternColor}) 10px 10px`; break;
+                case 'triangles': patternCSS = `linear-gradient(45deg, ${patternColor} 50%, transparent 50%)`; break;
+                case 'lines': patternCSS = `repeating-linear-gradient(45deg, ${patternColor}, ${patternColor} 1px, transparent 1px, transparent 6px)`; break;
+                default: patternCSS = `radial-gradient(${patternColor} 2px, transparent 2px)`;
             }
             quotePatternEl.style.backgroundImage = patternCSS;
-            quotePatternEl.style.backgroundSize = '20px 20px'; // Adjust size as needed
+            quotePatternEl.style.backgroundSize = '20px 20px';
         }
 
-        function getRandomColor() {
-            /* ... same as before ... */
-            const hue = Math.floor(Math.random() * 360);
-            return `hsla(${hue}, 80%, 60%, 0.3)`; // Saturation, Lightness, Alpha (for subtlety)
-        }
+        function getRandomColor() { const hue = Math.floor(Math.random() * 360); return `hsla(${hue}, 80%, 60%, 0.3)`; }
 
         function updateSocialLinks() {
-            /* ... same as before ... */
             if (!currentQuote || !socialLinks.twitter || currentQuote.category === 'favorites_empty' || currentQuote.category === 'category_empty' || currentQuote.category === 'empty') return;
-
-            const textToShare = `"${currentQuote.text}" ${currentQuote.author ? `— ${currentQuote.author}` : '— Anonymous'}`;
+            const textToShare = `"${currentQuote.text}" ${currentQuote.author ? `— ${currentQuote.author}` : (currentQuote.category === 'ai_generated' ? `— ✨ Vibe Scribe` : '— Anonymous')}`;
             const encodedText = encodeURIComponent(textToShare);
-            const pageUrl = window.location.href; // Or your specific page URL
+            const pageUrl = window.location.href;
             const encodedUrl = encodeURIComponent(pageUrl);
-
             socialLinks.twitter.href = `https://twitter.com/intent/tweet?text=${encodedText}&url=${encodedUrl}`;
             socialLinks.facebook.href = `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}&quote=${encodedText}`;
             socialLinks.linkedin.href = `https://www.linkedin.com/shareArticle?mini=true&url=${encodedUrl}&title=Inspirational%20Quote&summary=${encodedText}`;
             socialLinks.whatsapp.href = `https://wa.me/?text=${encodedText}%20${encodedUrl}`;
-            socialLinks.pinterest.href = `https://pinterest.com/pin/create/button/?url=${encodedUrl}&description=${encodedText}`; // Pinterest often uses description for the text
+            socialLinks.pinterest.href = `https://pinterest.com/pin/create/button/?url=${encodedUrl}&description=${encodedText}`;
         }
 
-
         // --- UI Setup Functions ---
-        // setupCategoryFilters() and setActiveCategory() REMOVED
-
         function setupCopyButton() {
-            /* ... same as before ... */
             if (!copyQuoteBtn) return;
             copyQuoteBtn.addEventListener('click', () => {
                 if (!currentQuote || currentQuote.category === 'favorites_empty' || currentQuote.category === 'category_empty' || currentQuote.category === 'empty') return;
-                const textToCopy = `"${currentQuote.text}" ${currentQuote.author ? `— ${currentQuote.author}` : '— Anonymous'}`;
+                const textToCopy = `"${currentQuote.text}" ${currentQuote.author ? `— ${currentQuote.author}` : (currentQuote.category === 'ai_generated' ? `— ✨ Vibe Scribe` : '— Anonymous')}`;
                 navigator.clipboard.writeText(textToCopy).then(() => {
                     if(copyFeedbackEl) copyFeedbackEl.textContent = "Copied to clipboard!";
                     if(copyTimeout) clearTimeout(copyTimeout);
-                    copyTimeout = setTimeout(() => {
-                        if(copyFeedbackEl) copyFeedbackEl.textContent = "";
-                    }, CONFIG.COPY_FEEDBACK_DURATION);
+                    copyTimeout = setTimeout(() => { if(copyFeedbackEl) copyFeedbackEl.textContent = ""; }, CONFIG.COPY_FEEDBACK_DURATION);
                 }).catch(err => {
                     console.error('Failed to copy: ', err);
                     if(copyFeedbackEl) copyFeedbackEl.textContent = "Copy failed.";
                     if(copyTimeout) clearTimeout(copyTimeout);
-                    copyTimeout = setTimeout(() => {
-                        if(copyFeedbackEl) copyFeedbackEl.textContent = "";
-                    }, CONFIG.COPY_FEEDBACK_DURATION);
+                    copyTimeout = setTimeout(() => { if(copyFeedbackEl) copyFeedbackEl.textContent = ""; }, CONFIG.COPY_FEEDBACK_DURATION);
                 });
             });
         }
 
         function setupTimerControls() {
-            /* ... same as before ... */
             if (!timerToggleBtn) return;
             timerToggleBtn.addEventListener('click', () => {
                 isTimerPaused = !isTimerPaused;
                 const icon = timerToggleBtn.querySelector('i');
-                if (isTimerPaused) {
-                    clearInterval(timerInterval);
-                    icon.classList.remove('fa-pause');
-                    icon.classList.add('fa-play');
-                    timerToggleBtn.title = "Resume Timer";
-                } else {
-                    resetTimer(); // This will start the timer if not already running
-                    icon.classList.remove('fa-play');
-                    icon.classList.add('fa-pause');
-                    timerToggleBtn.title = "Pause Timer";
-                }
+                if (isTimerPaused) { clearInterval(timerInterval); icon.classList.remove('fa-pause'); icon.classList.add('fa-play'); timerToggleBtn.title = "Resume Timer"; }
+                else { resetTimer(); icon.classList.remove('fa-play'); icon.classList.add('fa-pause'); timerToggleBtn.title = "Pause Timer"; }
             });
         }
 
-
         function setupEffectsToggle() {
             if (!effectsToggleCheckboxEl || !settingsToggleEl || !settingsPanelEl) return;
-
-            settingsToggleEl.addEventListener('click', (e) => {
-                e.stopPropagation(); // Prevent click from closing panel immediately
-                settingsPanelEl.classList.toggle('hidden');
-            });
-
-            // Close panel if clicked outside
+            settingsToggleEl.addEventListener('click', (e) => { e.stopPropagation(); settingsPanelEl.classList.toggle('hidden'); });
             document.addEventListener('click', (e) => {
-                if (!settingsPanelEl.classList.contains('hidden') &&
-                    !settingsPanelEl.contains(e.target) &&
-                    e.target !== settingsToggleEl &&
-                    !settingsToggleEl.contains(e.target) // Also check if click was on toggle icon itself
-                   ) {
+                if (!settingsPanelEl.classList.contains('hidden') && !settingsPanelEl.contains(e.target) && e.target !== settingsToggleEl && !settingsToggleEl.contains(e.target)) {
                     settingsPanelEl.classList.add('hidden');
                 }
             });
-
-
-            // Load preference from localStorage
             const storedEffectsPreference = localStorage.getItem('vibeMeEffectsEnabled');
-            let initialEffectsEnabled = storedEffectsPreference !== null ? JSON.parse(storedEffectsPreference) : true; // Default to true
-
+            let initialEffectsEnabled = storedEffectsPreference !== null ? JSON.parse(storedEffectsPreference) : true;
             effectsToggleCheckboxEl.checked = initialEffectsEnabled;
-            // This call sets the initial state of all visual effects based on preference
             toggleVisualEffects(initialEffectsEnabled);
-
-
             effectsToggleCheckboxEl.addEventListener('change', (e) => {
                 toggleVisualEffects(e.target.checked);
                 localStorage.setItem('vibeMeEffectsEnabled', e.target.checked);
             });
         }
 
-        function setupFavoriteButton() {
-            /* ... same as before ... */
-            if (!favoriteQuoteBtn) return;
-            favoriteQuoteBtn.addEventListener('click', toggleFavoriteQuote);
-        }
-
+        function setupFavoriteButton() { if (!favoriteQuoteBtn) return; favoriteQuoteBtn.addEventListener('click', toggleFavoriteQuote); }
 
         function setupClearFavoritesButton() {
-            /* ... same as before, but removed call to setupCategoryFilters() ... */
             if(!clearFavoritesBtnEl) return;
-
             clearFavoritesBtnEl.addEventListener('click', () => {
                 if (confirm("Are you sure you want to clear all your favorites? This cannot be undone.")) {
-                    favoriteQuotes = [];
-                    saveFavorites();
-                    updateFavoriteButtonUI();
-                    // setupCategoryFilters(); // REMOVED
-                    if (activeCategory === 'Favorites') { // If user was somehow in a "Favorites" view (e.g. future feature)
-                        activeCategory = 'All';
-                        generateQuote(); // Refresh quote display
-                    }
+                    favoriteQuotes = []; saveFavorites(); updateFavoriteButtonUI();
+                    if (activeCategory === 'Favorites') { activeCategory = 'All'; generateQuote(); }
                     if(copyFeedbackEl) copyFeedbackEl.textContent = "Favorites cleared.";
                     if(copyTimeout) clearTimeout(copyTimeout);
                     copyTimeout = setTimeout(() => { if(copyFeedbackEl) copyFeedbackEl.textContent = ""; }, CONFIG.COPY_FEEDBACK_DURATION);
                 }
             });
+        }
+
+        // --- Gemini API Functions ---
+        async function callGeminiAPI(promptText) {
+            const apiKey = ""; // Handled by environment
+            const fullApiUrl = `${CONFIG.GEMINI_API_URL}${apiKey}`;
+            let chatHistory = [{ role: "user", parts: [{ text: promptText }] }];
+            const payload = { contents: chatHistory };
+
+            try {
+                const response = await fetch(fullApiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                if (!response.ok) {
+                    const errorBody = await response.text();
+                    console.error('Gemini API Error Response:', errorBody);
+                    throw new Error(`API request failed with status ${response.status}: ${response.statusText}`);
+                }
+                const result = await response.json();
+                if (result.candidates && result.candidates.length > 0 &&
+                    result.candidates[0].content && result.candidates[0].content.parts &&
+                    result.candidates[0].content.parts.length > 0) {
+                    return result.candidates[0].content.parts[0].text;
+                } else {
+                    console.error('Unexpected Gemini API response structure:', result);
+                    throw new Error('Failed to extract text from Gemini API response.');
+                }
+            } catch (error) {
+                console.error('Error calling Gemini API:', error);
+                throw error; // Re-throw to be caught by caller
+            }
+        }
+
+        async function handleExplainQuote() {
+            if (!currentQuote || currentQuote.category === 'favorites_empty' || currentQuote.category === 'category_empty' || currentQuote.category === 'empty') {
+                quoteExplanationText.textContent = "Please generate a quote first.";
+                quoteExplanationContainer.classList.remove('hidden');
+                return;
+            }
+
+            explanationLoading.classList.remove('hidden');
+            quoteExplanationText.textContent = '';
+            quoteExplanationContainer.classList.remove('hidden');
+
+            const prompt = `Explain the meaning and context of the following quote: "${currentQuote.text}" by ${currentQuote.author || 'Anonymous'}. Keep the explanation concise, insightful, and around 2-4 sentences.`;
+
+            try {
+                const explanation = await callGeminiAPI(prompt);
+                quoteExplanationText.innerHTML = `<strong>Explanation:</strong> ${explanation.replace(/\n/g, '<br>')}`; // Replace newlines with <br> for HTML display
+            } catch (error) {
+                quoteExplanationText.textContent = "Sorry, couldn't fetch an explanation at this time.";
+            } finally {
+                explanationLoading.classList.add('hidden');
+            }
+        }
+
+        async function handleGenerateCustomQuote() {
+            const theme = themeInput.value.trim();
+            if (!theme) {
+                vibeScribeFeedback.textContent = "Please enter a theme.";
+                setTimeout(() => { vibeScribeFeedback.textContent = ""; }, 2000);
+                return;
+            }
+
+            vibeScribeLoading.classList.remove('hidden');
+            generateCustomQuoteBtn.disabled = true;
+            vibeScribeFeedback.textContent = "";
+
+
+            const prompt = `Generate a short, insightful, and motivational quote about "${theme}". The quote should be original and impactful. Do not include an author name. The quote should be a single, complete sentence or two short related sentences.`;
+
+            try {
+                const customQuoteText = await callGeminiAPI(prompt);
+                const newVibe = {
+                    text: customQuoteText.replace(/^"|"$/g, ''), // Remove surrounding quotes if API adds them
+                    author: "", // Author will be "✨ Vibe Scribe" handled in animateQuoteChange
+                    category: 'ai_generated' // Use 'originality' for theming for now
+                };
+                animateQuoteChange(newVibe, true); // Pass true for isCustomVibe
+                themeInput.value = ''; // Clear input
+            } catch (error) {
+                vibeScribeFeedback.textContent = "Sorry, couldn't generate a vibe. Try again.";
+                 setTimeout(() => { vibeScribeFeedback.textContent = ""; }, 3000);
+            } finally {
+                vibeScribeLoading.classList.add('hidden');
+                generateCustomQuoteBtn.disabled = false;
+            }
         }
 
 
@@ -2776,22 +2164,26 @@
             countdownEl = document.getElementById('countdown');
             timerToggleBtn = document.getElementById('timer-toggle-btn');
             quotePatternEl = document.getElementById('quote-pattern');
-            rootStyle = document.documentElement.style; // For CSS variables
-
-            // Moved these up
+            rootStyle = document.documentElement.style;
             mouseGlowElement = document.getElementById('mouse-glow');
             matrixBg = document.getElementById('matrix-bg');
-
-            // categoryFiltersEl REMOVED
-
             copyQuoteBtn = document.getElementById('copy-quote-btn');
             favoriteQuoteBtn = document.getElementById('favorite-quote-btn');
             copyFeedbackEl = document.getElementById('copy-feedback');
-
             settingsToggleEl = document.getElementById('settings-toggle');
             settingsPanelEl = document.getElementById('settings-panel');
             effectsToggleCheckboxEl = document.getElementById('effects-toggle-checkbox');
             clearFavoritesBtnEl = document.getElementById('clear-favorites-btn');
+
+            // Gemini Feature Elements
+            explainQuoteBtn = document.getElementById('explain-quote-btn');
+            quoteExplanationContainer = document.getElementById('quote-explanation-container');
+            quoteExplanationText = document.getElementById('quote-explanation-text');
+            explanationLoading = document.getElementById('explanation-loading');
+            themeInput = document.getElementById('theme-input');
+            generateCustomQuoteBtn = document.getElementById('generate-custom-quote-btn');
+            vibeScribeLoading = document.getElementById('vibe-scribe-loading');
+            vibeScribeFeedback = document.getElementById('vibe-scribe-feedback');
 
 
             socialLinks = {
@@ -2802,74 +2194,66 @@
                 pinterest: document.getElementById('pinterest-share')
             };
 
-            // Basic check for essential elements
-            let coreElementsMissing = !quoteTextEl || !quoteAuthorEl || !generateBtn || !countdownEl
-                                   /* || !categoryFiltersEl REMOVED */ || !copyQuoteBtn || !favoriteQuoteBtn
-                                   || !timerToggleBtn || !settingsToggleEl || !settingsPanelEl
-                                   || !effectsToggleCheckboxEl || !clearFavoritesBtnEl;
+            let coreElementsMissing = !quoteTextEl || !quoteAuthorEl || !generateBtn || !countdownEl ||
+                                   !copyQuoteBtn || !favoriteQuoteBtn || !timerToggleBtn ||
+                                   !settingsToggleEl || !settingsPanelEl || !effectsToggleCheckboxEl || !clearFavoritesBtnEl ||
+                                   !explainQuoteBtn || !quoteExplanationContainer || !quoteExplanationText || !explanationLoading ||
+                                   !themeInput || !generateCustomQuoteBtn || !vibeScribeLoading || !vibeScribeFeedback;
 
-            if (!mouseGlowElement) {
-                console.warn("Mouse glow element not found. Glow effect will be disabled.");
-            }
-            if (!matrixBg) {
-                console.warn("Matrix background element not found. Matrix effect will be disabled.");
-            }
 
+            if (!mouseGlowElement) console.warn("Mouse glow element not found.");
+            if (!matrixBg) console.warn("Matrix background element not found.");
 
             if (coreElementsMissing) {
-                console.error("Init failed – one or more essential quote generator elements missing.");
+                console.error("Init failed – one or more essential elements missing.");
                 if(document.body) document.body.innerHTML = "<h1>Error: Could not initialize page. Essential elements missing.</h1>";
                 return;
             }
 
-
             loadFavorites();
-            activeCategory = 'All'; // Always default to 'All' since filters are removed
-
-            currentQuote = selectNextQuote(); // Get initial quote
+            activeCategory = 'All';
+            currentQuote = selectNextQuote();
 
             if (!currentQuote || currentQuote.category === 'empty' || currentQuote.category === 'category_empty' || currentQuote.category === 'favorites_empty') {
-                // Handle cases where no valid quote is available on init (e.g., all lists empty)
                 quoteTextEl.textContent = currentQuote ? currentQuote.text : "Failed to load quotes.";
                 quoteAuthorEl.textContent = currentQuote ? (currentQuote.author || (currentQuote.category === "favorites_empty" || currentQuote.category === "category_empty" ? "" : "Anonymous")) : "";
                 if (currentQuote) applyThemeStyles(currentQuote.category || 'values');
-                if(countdownEl && countdownEl.parentElement) countdownEl.parentElement.style.display = 'none'; // Hide timer if no quote
+                if(countdownEl && countdownEl.parentElement) countdownEl.parentElement.style.display = 'none';
             } else {
                 applyThemeStyles(currentQuote.category);
                 quoteTextEl.textContent = currentQuote.text;
                 quoteAuthorEl.textContent = currentQuote.author ? `— ${currentQuote.author}` : '— Anonymous';
-                quoteTextEl.dataset.text = currentQuote.text; // For glitch effect
+                quoteTextEl.dataset.text = currentQuote.text;
                 if (!isTimerPaused) resetTimer();
             }
-
 
             generatePattern();
             updateSocialLinks();
             updateFavoriteButtonUI();
-
-            setupMouseGlow(); // Call once to set up event listeners
-            setupEffectsToggle(); // Reads preference and applies initial visual effects state (including glow animations)
-
+            setupMouseGlow();
+            setupEffectsToggle();
             setupCopyButton();
             setupTimerControls();
             setupFavoriteButton();
             setupClearFavoritesButton();
 
+            // Setup Gemini Feature Listeners
+            explainQuoteBtn.addEventListener('click', handleExplainQuote);
+            generateCustomQuoteBtn.addEventListener('click', handleGenerateCustomQuote);
+
+
             generateBtn.addEventListener('click', () => {
-                // Since activeCategory is 'All', no need to save it to localStorage for category filtering
+                if (quoteExplanationContainer) quoteExplanationContainer.classList.add('hidden'); // Hide explanation on new random quote
+                if (quoteExplanationText) quoteExplanationText.textContent = '';
                 generateQuote();
             });
 
-            // Handle Matrix effect on resize (debounced)
             window.addEventListener('resize', () => {
                 clearTimeout(window.resizeTimeout);
-                window.resizeTimeout = setTimeout(() => {
-                    if(visualEffectsEnabled && matrixBg) createMatrixEffect();
-                }, 250);
+                window.resizeTimeout = setTimeout(() => { if(visualEffectsEnabled && matrixBg) createMatrixEffect(); }, 250);
             });
         }
 
-        // Start the application once the DOM is fully loaded
         document.addEventListener('DOMContentLoaded', init);
     </script>
 </body>
