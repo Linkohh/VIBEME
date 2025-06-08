@@ -353,6 +353,14 @@
         <div>
             <button id="clear-favorites-btn" class="w-full text-sm bg-red-500/80 hover:bg-red-600/80 px-2 py-1.5 rounded">Clear Favorites</button>
         </div>
+        <div>
+            <button id="toggle-add-quote-form" class="w-full text-sm bg-green-500/80 hover:bg-green-600/80 px-2 py-1.5 rounded">Add Quote</button>
+            <div id="add-quote-form" class="hidden mt-2 space-y-2">
+                <textarea id="new-quote-text" rows="3" class="w-full text-black p-2 rounded" placeholder="Quote text"></textarea>
+                <input id="new-quote-author" type="text" class="w-full text-black p-1 rounded" placeholder="Author (optional)">
+                <button id="submit-quote-btn" class="w-full text-sm bg-blue-500/80 hover:bg-blue-600/80 px-2 py-1.5 rounded">Submit</button>
+            </div>
+        </div>
     </div>
 
 
@@ -409,6 +417,7 @@
             MATRIX_UPDATE_INTERVAL: 1500,
             COPY_FEEDBACK_DURATION: 2000,
             LOCALSTORAGE_FAVORITES_KEY: 'vibeMeFavorites',
+            LOCALSTORAGE_USER_QUOTES_KEY: 'vibeMeUserQuotes',
             // GEMINI_API_URL REMOVED
         };
 
@@ -1586,6 +1595,7 @@
         let visualEffectsEnabled = true;
         let activeCategory = 'All';
         let favoriteQuotes = [];
+        let userQuotes = [];
         let copyTimeout = null;
         let glowHue = 0;
         let glowAnimationId = null;
@@ -1601,7 +1611,8 @@
         let quoteTextEl, quoteAuthorEl, generateBtn, countdownEl, timerToggleBtn,
             quotePatternEl, rootStyle, socialLinks = {}, matrixBg,
             copyQuoteBtn, favoriteQuoteBtn, copyFeedbackEl,
-            settingsToggleEl, settingsPanelEl, effectsToggleCheckboxEl, clearFavoritesBtnEl;
+            settingsToggleEl, settingsPanelEl, effectsToggleCheckboxEl, clearFavoritesBtnEl,
+            addQuoteToggleBtnEl, addQuoteFormEl, newQuoteTextEl, newQuoteAuthorEl, submitQuoteBtnEl;
 
 
         // --- Utility Functions ---
@@ -1789,6 +1800,14 @@
                 icon.classList.remove('fas', 'text-pink-500'); icon.classList.add('far'); favoriteQuoteBtn.title = "Add to Favorites";
             }
         }
+
+        // --- User Quotes ---
+        function loadUserQuotes() {
+            const stored = localStorage.getItem(CONFIG.LOCALSTORAGE_USER_QUOTES_KEY);
+            if (stored) { try { userQuotes = JSON.parse(stored); } catch (e) { console.error('Error parsing user quotes:', e); userQuotes = []; } }
+            if (userQuotes && userQuotes.length > 0) { userQuotes.forEach(q => quotes.push(q)); }
+        }
+        function saveUserQuotes() { localStorage.setItem(CONFIG.LOCALSTORAGE_USER_QUOTES_KEY, JSON.stringify(userQuotes)); }
 
         // --- Core Quote Generator Functions ---
         function selectNextQuote() {
@@ -1996,6 +2015,25 @@
             });
         }
 
+        function setupAddQuoteForm() {
+            if(!addQuoteToggleBtnEl || !addQuoteFormEl || !newQuoteTextEl || !submitQuoteBtnEl) return;
+            addQuoteToggleBtnEl.addEventListener('click', (e) => { e.stopPropagation(); addQuoteFormEl.classList.toggle('hidden'); });
+            submitQuoteBtnEl.addEventListener('click', (e) => {
+                e.preventDefault();
+                const text = newQuoteTextEl.value.trim();
+                const author = newQuoteAuthorEl.value.trim();
+                if(!text) { if(copyFeedbackEl){copyFeedbackEl.textContent = 'Enter a quote.'; if(copyTimeout) clearTimeout(copyTimeout); copyTimeout=setTimeout(()=>{if(copyFeedbackEl) copyFeedbackEl.textContent='';}, CONFIG.COPY_FEEDBACK_DURATION);} return; }
+                const newQuote = { text, author, category: 'user' };
+                quotes.push(newQuote);
+                userQuotes.push(newQuote);
+                saveUserQuotes();
+                newQuoteTextEl.value = '';
+                newQuoteAuthorEl.value = '';
+                addQuoteFormEl.classList.add('hidden');
+                if(copyFeedbackEl){copyFeedbackEl.textContent = 'Quote added!'; if(copyTimeout) clearTimeout(copyTimeout); copyTimeout = setTimeout(() => { if(copyFeedbackEl) copyFeedbackEl.textContent = ''; }, CONFIG.COPY_FEEDBACK_DURATION); }
+            });
+        }
+
         // --- Gemini API Functions REMOVED ---
         // async function callGeminiAPI(promptText) { ... } REMOVED
         // async function handleExplainQuote() { ... } REMOVED
@@ -2021,6 +2059,11 @@
             settingsPanelEl = document.getElementById('settings-panel');
             effectsToggleCheckboxEl = document.getElementById('effects-toggle-checkbox');
             clearFavoritesBtnEl = document.getElementById('clear-favorites-btn');
+            addQuoteToggleBtnEl = document.getElementById('toggle-add-quote-form');
+            addQuoteFormEl = document.getElementById('add-quote-form');
+            newQuoteTextEl = document.getElementById('new-quote-text');
+            newQuoteAuthorEl = document.getElementById('new-quote-author');
+            submitQuoteBtnEl = document.getElementById('submit-quote-btn');
 
             // Gemini Feature Elements REMOVED
 
@@ -2032,9 +2075,10 @@
                 pinterest: document.getElementById('pinterest-share')
             };
 
-            let coreElementsMissing = !quoteTextEl || !quoteAuthorEl || !generateBtn || !countdownEl ||
+           let coreElementsMissing = !quoteTextEl || !quoteAuthorEl || !generateBtn || !countdownEl ||
                                    !copyQuoteBtn || !favoriteQuoteBtn || !timerToggleBtn ||
-                                   !settingsToggleEl || !settingsPanelEl || !effectsToggleCheckboxEl || !clearFavoritesBtnEl;
+                                   !settingsToggleEl || !settingsPanelEl || !effectsToggleCheckboxEl || !clearFavoritesBtnEl ||
+                                   !addQuoteToggleBtnEl || !addQuoteFormEl || !newQuoteTextEl || !submitQuoteBtnEl;
 
 
             if (!mouseGlowElement) console.warn("Mouse glow element not found.");
@@ -2047,6 +2091,7 @@
             }
 
             loadFavorites();
+            loadUserQuotes();
             activeCategory = 'All';
             currentQuote = selectNextQuote();
 
@@ -2072,6 +2117,7 @@
             setupTimerControls();
             setupFavoriteButton();
             setupClearFavoritesButton();
+            setupAddQuoteForm();
 
             // Setup Gemini Feature Listeners REMOVED
 
